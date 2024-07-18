@@ -91,16 +91,4 @@ function enqueue_epub_converter_scripts() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_epub_converter_scripts');
 
-function display_epub_link() {
-    if (is_single()) {
-        $post_id = get_the_ID();
-        $url = admin_url('admin-ajax.php') . '?action=generate_epub&post_id=' . $post_id;
-        return '<span class="meta-epub">
-            <svg class="icon icon-book" aria-hidden="true" role="img">
-                <use xlink:href="' . get_template_directory_uri() . '/assets/icons/genericons-neue.svg#book"></use>
-            </svg>
-            <a href="#" class="button epub-link" data-post-id="' . $post_id . '">Download as EPUB</a>
-        </span>';
-    }
-}
 ?>
