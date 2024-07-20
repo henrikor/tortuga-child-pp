@@ -13,8 +13,8 @@ function filter_frontpage_category($query) {
 add_action('pre_get_posts', 'filter_frontpage_category');
 
 function add_epub_link_to_meta() {
-    if (is_single() && function_exists('display_epub_link')) {
-        error_log("display_epub_link exists");
+    if (is_single() && function_exists('display_epub_link_theme')) {
+        error_log("display_epub_link_theme exists");
 
         $dom = new DOMDocument();
         $dom->preserveWhiteSpace = false;
@@ -29,7 +29,7 @@ function add_epub_link_to_meta() {
         $entry_meta = $xpath->query('//div[contains(@class, "entry-meta")]')->item(0);
 
         if ($entry_meta) {
-            $link = display_epub_link();
+            $link = display_epub_link_theme();
 
             $fragment = $dom->createDocumentFragment();
             // Add XML namespace for xlink
@@ -42,7 +42,7 @@ function add_epub_link_to_meta() {
             error_log('Entry-meta div not found.');
         }
     } else {
-        error_log('display_epub_link function not found.');
+        error_log('display_epub_link_theme function not found.');
     }
 }
 add_action('wp_footer', 'add_epub_link_to_meta', 20);
@@ -91,4 +91,16 @@ function enqueue_epub_converter_scripts() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_epub_converter_scripts');
 
+function display_epub_link_theme() {
+    if (is_single()) {
+        $post_id = get_the_ID();
+        $url = admin_url('admin-ajax.php') . '?action=generate_epub&post_id=' . $post_id;
+        return '<span class="meta-epub">
+            <svg class="icon icon-book" aria-hidden="true" role="img">
+                <use xlink:href="' . get_template_directory_uri() . '/assets/icons/genericons-neue.svg#book"></use>
+            </svg>
+            <a href="#" class="button epub-link" data-post-id="' . $post_id . '">Download as EPUB</a>
+        </span>';
+    }
+}
 ?>

@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
     var modal = $('#epubModal');
     var span = $('.close');
 
-    $(document).on('click', '.epub-link', function(e) {
+    $('.epub-link').click(function(e) {
         e.preventDefault();
         var postId = $(this).data('post-id');
         $('#epubPostId').val(postId);
@@ -48,7 +48,12 @@ jQuery(document).ready(function($) {
 
         $.post(wpEpubConverter.ajax_url, data, function(response) {
             console.log('AJAX response:', response);
-            window.location.href = response;
+            if (response.success) {
+                console.log('Redirecting to: ' + response.data.url);
+                window.location.href = response.data.url;
+            } else {
+                console.error('EPUB generation failed: ' + response.data);
+            }
         }).fail(function(jqXHR, textStatus, errorThrown) {
             console.error('AJAX error:', textStatus, errorThrown);
         });

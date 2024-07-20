@@ -53,12 +53,13 @@
     box-sizing: border-box;
 }
 
-.form-group .form-checkbox {
+.form-checkbox {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
-.form-group .form-checkbox input[type="checkbox"] {
+.form-checkbox input[type="checkbox"] {
     width: auto;
     margin-left: 10px;
 }
