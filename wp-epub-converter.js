@@ -48,11 +48,12 @@ jQuery(document).ready(function($) {
 
         $.post(wpEpubConverter.ajax_url, data, function(response) {
             console.log('AJAX response:', response);
+
             if (response.success) {
-                console.log('Redirecting to: ' + response.data.url);
-                window.location.href = response.data.url;
+                var downloadLink = '<a href="' + response.data.url + '">Download EPUB</a>';
+                $('#epubForm').append('<div id="downloadLink">' + downloadLink + '</div>');
             } else {
-                console.error('EPUB generation failed: ' + response.data);
+                console.error('Failed to generate EPUB:', response.data.message);
             }
         }).fail(function(jqXHR, textStatus, errorThrown) {
             console.error('AJAX error:', textStatus, errorThrown);
