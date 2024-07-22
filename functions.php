@@ -49,34 +49,37 @@ add_action('wp_footer', 'add_epub_link_to_meta', 20);
 
 function add_epub_modal_html() {
     ?>
-<div id="epubModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <form id="epubForm">
-            <div class="form-group">
-                <label for="epubAuthor">Author:</label>
-                <input type="text" id="epubAuthor" name="author" class="form-control"><br>
-            </div>
-            <div class="form-group">
-                <label for="epubTitle">Title:</label>
-                <input type="text" id="epubTitle" name="title" class="form-control"><br>
-            </div>
-            <div class="form-group">
-                <label for="epubVersion">EPUB Version:</label>
-                <select id="epubVersion" name="version" class="form-control">
-                    <option value="2">EPUB 2</option>
-                    <option value="3" selected>EPUB 3</option>
-                </select><br>
-            </div>
-            <div class="form-group form-checkbox">
-                <label for="epubKepub">Convert to KEpub:</label>
-                <input type="checkbox" id="epubKepub" name="kepub">
-            </div>
-            <input type="hidden" id="epubPostId" name="post_id">
-            <button type="submit" class="btn btn-primary">Convert</button>
-        </form>
+    <div id="epubModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form id="epubForm">
+                <div class="form-group">
+                    <label for="epubAuthor">Author:</label>
+                    <input type="text" id="epubAuthor" name="author" class="form-control"><br>
+                </div>
+                <div class="form-group">
+                    <label for="epubTitle">Title:</label>
+                    <input type="text" id="epubTitle" name="title" class="form-control"><br>
+                </div>
+                <div class="form-group">
+                    <label for="epubVersion">EPUB Version:</label>
+                    <select id="epubVersion" name="version" class="form-control">
+                        <option value="2">EPUB 2</option>
+                        <option value="3" selected>EPUB 3</option>
+                    </select><br>
+                </div>
+                <div class="form-group form-checkbox">
+                    <label for="epubKepub">Convert to KEpub:
+                        <span class="tooltip-icon">?</span>
+                        <span class="tooltip-text">Use this if you have a Kobo ereader</span>
+                    </label>
+                    <input type="checkbox" id="epubKepub" name="kepub">
+                </div>
+                <input type="hidden" id="epubPostId" name="post_id">
+                <button type="submit" class="btn btn-primary">Convert</button>
+            </form>
+        </div>
     </div>
-</div>
     <?php
 }
 add_action('wp_footer', 'add_epub_modal_html');
