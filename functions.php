@@ -70,10 +70,9 @@ function add_epub_modal_html() {
                 </div>
                 <div class="form-group form-checkbox">
                     <label for="epubKepub">Convert to KEpub:
-                        <span class="tooltip-icon">?</span>
-                        <span class="tooltip-text">Use this if you have a Kobo ereader</span>
                     </label>
                     <input type="checkbox" id="epubKepub" name="kepub">
+                    <p>(Select this if you have a Kobo ereader)</p>
                 </div>
                 <input type="hidden" id="epubPostId" name="post_id">
                 <button type="submit" class="btn btn-primary">Convert</button>
