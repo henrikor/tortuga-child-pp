@@ -5,13 +5,6 @@ function tortuga_child_enqueue_styles() {
 }
 add_action('wp_enqueue_scripts', 'tortuga_child_enqueue_styles');
 
-function filter_frontpage_category($query) {
-    if ($query->is_home() && $query->is_main_query()) {
-        $query->set('cat', '19');  // Bruker kategori-ID 19
-    }
-}
-add_action('pre_get_posts', 'filter_frontpage_category');
-
 function add_epub_link_to_meta() {
     if (is_single() && function_exists('display_epub_link_theme')) {
         error_log("display_epub_link_theme exists");
