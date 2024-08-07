@@ -5,8 +5,27 @@ function tortuga_child_enqueue_styles() {
 }
 add_action('wp_enqueue_scripts', 'tortuga_child_enqueue_styles');
 
+function enqueue_custom_scripts() {
+     wp_enqueue_script('custom-scripts', get_stylesheet_directory_uri() . '/custom.js', array('jquery'), null, true);
+}
+
+add_action('wp_enqueue_scripts', 'enqueue_custom_scripts');
+
 function add_epub_link_to_meta() {
     if (is_single() && function_exists('display_epub_link_theme')) {
+
+        echo '<script>
+            setTimeout(function() {
+                var entryMeta = document.querySelector(".entry-meta");
+                if (entryMeta) {
+                    entryMeta.innerHTML += ' . json_encode(display_epub_link_theme()) . ';
+                    console.log("EPUB link added after delay.");
+                } else {
+                    console.log("Entry-meta div not found after delay.");
+                }
+            }, 1000); // Forsinkelse på 1 sekund
+        </script>';
+
         error_log("display_epub_link_theme exists");
 
         $dom = new DOMDocument();
@@ -15,8 +34,7 @@ function add_epub_link_to_meta() {
 
         // Define XML namespace for xlink
         $dom->loadXML('<?xml version="1.0" encoding="UTF-8"?><root xmlns:xlink="http://www.w3.org/1999/xlink"></root>');
-
-        @$dom->loadHTML('<?xml encoding="utf-8" ?>' . ob_get_clean());
+        $dom->loadHTML('<?xml encoding="utf-8" ?>' . ob_get_clean());
 
         $xpath = new DOMXPath($dom);
         $entry_meta = $xpath->query('//div[contains(@class, "entry-meta")]')->item(0);
@@ -38,7 +56,8 @@ function add_epub_link_to_meta() {
         error_log('display_epub_link_theme function not found.');
     }
 }
-add_action('wp_footer', 'add_epub_link_to_meta', 20);
+
+add_action('wp_footer', 'add_epub_link_to_meta', 99); // Øk prioriteten
 
 function add_epub_modal_html() {
     ?>
